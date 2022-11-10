@@ -2,7 +2,7 @@
 
 L’objectif de cette exercice et de développer une messagerie instantané en utilisant une API
 GraphQL
-
+![Screenshot de l'app](./Screenshot-from-2022-11-10-08-49-30.png)
 ![Screenshot de l'app](./Screenshot-from-2022-11-10-08-17-00.png)
 ![Screenshot de l'app](./Screenshot-from-2022-11-10-08-17-07.png)
 
