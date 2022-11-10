@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{app.user.fullname}} / Home / {{parent()}}{% endblock %}
+
+{% block body %}
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-md-4 border-left  border-danger">
+                <form class="d-flex mb-3" role="search">
+                    <input class="form-control me-2 border border-primary" type="search" placeholder="Search for people and groups" aria-label="Search">
+                </form>
+
+                <ul class="list-group list-group-flush">
+                    {% for thread in threads %}
+                        <li class="list-group-item {% if app.request.get('thread') == thread.slug %}bg-primary bg-opacity-10 rounded{% endif %}">
+                            <a class="d-flex flex-column d-block text-decoration-none text-dark" href="{{path('home',{thread:thread.slug})}}">
+                                <span class="d-flex w-100 align-items-center justify-content-between">
+                                    <span class="h5 mb-0 {% if app.request.get('thread') == thread.slug %}text-primary{% endif %}">{{thread.subject}}</span>
+                                    <span>
+                                    {% if thread.updatedAt %}
+                                        {{thread.updatedAt|format_datetime('none', 'short', locale='fr')}} {{thread.updatedAt|format_datetime('none', 'short', 'a', locale='fr')|lower}}
+                                    {% else %}
+                                        {{thread.createdAt|format_datetime('none', 'short', locale='fr')}} {{thread.createdAt|format_datetime('none', 'short', 'a', locale='fr')|lower}}
+                                    {% endif %}
+                                    </span>
+                                </span>
+                                <span class="d-flex w-100 align-items-center justify-content-between">
+                                    <span>
+                                        {{thread.messages.last.senderText}} : {{thread.messages.last.content|truncate}}
+                                    </span>
+                                    <span class="h5 mb-0 text-secondary">{{thread.messages|length}}</span>
+                                </span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if thread is not null and thread is defined %}
+                <div class="col-md-8">
+                    <ul class="list-group list-group-flush">
+                        {% for message in thread.messages %}
+                            <li class="list-group-item d-flex flex-column">
+                                <span class="h5 fw-normal">{{message.content}}</span>
+                                <span class="text-secondary">{{message.sender.fullname}} - {{message.createdAt|date()}}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <form class="d-flex mt-5" role="search">
+                        <textarea class="form-control me-2" type="search" placeholder="Search for people and groups" aria-label="Search"></textarea>
+                        <input class="form-control " type="hidden" name="thread" aria-label="Search" value="{{app.request.get('thread')}}">
+                        <button class="btn btn-primary" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+                
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

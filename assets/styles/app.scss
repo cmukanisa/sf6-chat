@@ -1,0 +1,164 @@
+// @import "~bootstrap/scss/bootstrap";
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    color: #172b4d;
+    font: 1.1em;
+    // font-size: 10pt;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.45;
+    text-decoration-skip-ink: auto;
+    // font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+html {
+    height: -webkit-fill-available;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+main {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.nav-flush .nav-link {
+    border-radius: 0;
+}
+
+.btn-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: .25rem .5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .65);
+    background-color: transparent;
+    border: 0;
+}
+
+.btn-toggle:hover,
+.btn-toggle:focus {
+    color: rgba(0, 0, 0, .85);
+    background-color: #d2f4ea;
+}
+
+.btn-toggle::before {
+    width: 1.25em;
+    line-height: 0;
+    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+    transition: transform .35s ease;
+    transform-origin: .5em 50%;
+}
+
+.btn-toggle[aria-expanded="true"] {
+    color: rgba(0, 0, 0, .85);
+}
+
+.btn-toggle[aria-expanded="true"]::before {
+    transform: rotate(90deg);
+}
+
+.btn-toggle-nav a {
+    display: inline-flex;
+    padding: .1875rem .5rem;
+    margin-top: .125rem;
+    margin-left: 1.25rem;
+    text-decoration: none;
+}
+
+.btn-toggle-nav a:hover,
+.btn-toggle-nav a:focus {
+    background-color: #d2f4ea;
+}
+
+.scrollarea {
+    overflow-y: auto;
+}
+.page-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.site-container {
+    flex: 1;
+}
+
+.app-footer {
+    margin-top: 20pt;
+    padding-top: 10pt;
+    padding-bottom: 10pt;
+    background-color: rgba(27, 27, 27, 0.87);
+    color: white;
+    a {
+        color: white;
+    }
+}
+
+
+@media only screen and (min-width: 768px) {
+    body,
+    h6 {
+        font-size: 9.5pt;
+    }
+    h5,.f6, .h5 {
+        font-size: 11pt !important;
+    }
+    h4 {
+        font-size: 11pt !important;
+    }
+    h3 {
+        font-size: 14pt !important;
+    }
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+
+@media only screen and (min-width: 1200px) {
+    .divisible {
+        width: 32%;
+    }
+    .divisible-100 {
+        width: 100%;
+    }
+
+    .divisible-50 {
+        width: 50%;
+    }
+
+    // ...
+    body,
+    h6 {
+        font-size: 10.5pt;
+    }
+    h5,.f6, .h5 {
+        font-size: 12pt !important;
+    }
+    h4 {
+        font-size: 14pt !important;
+    }
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #0d6efd;
+}
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #0d6efd;
+}
+  
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #0d6efd;
+}
+
