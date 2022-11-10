@@ -75,7 +75,7 @@ http://localhost:8000/api/graphql
 
 # IDENTIFIANTS DE CONNEXION
 
-Nous avons inserer 13 users ayant tous comme mot de passe __388221__ et des emails du type __user1@gmail.com__ à __user10@gmail.com__
+Nous avons inserer 13 users ayant tous comme mot de passe __388221__ et des emails du type __email1@sf6chat.com__ à __email13@sf6chat.com__
 
 
 # S'AUTHENTIFIER A L'API
