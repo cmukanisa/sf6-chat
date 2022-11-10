@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create();
         $users = [];
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 13; $i++) {
             $user = (new User())
                 ->setEmail("email$i@sf6chat.com")
                 ->setRoles(['ROLE_USER'])
@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
 
             $user->setPassword($this->passwordHasher->hashPassword(
                 $user,
-                "password"
+                388221
             ));
 
             $users[] = $user;
