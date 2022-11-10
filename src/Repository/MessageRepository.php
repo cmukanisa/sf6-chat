@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Message;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @extends ServiceEntityRepository<Message>
@@ -16,7 +17,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class MessageRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        Private Security $security,
+        ManagerRegistry $registry
+    )
     {
         parent::__construct($registry, Message::class);
     }
@@ -37,6 +41,22 @@ class MessageRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findMessageWithMetadata($message,$user){
+
+        return $this->createQueryBuilder('m')
+            ->join('m.metadata','mt')
+            ->join('mt.user','u')
+            ->andWhere('m.slug = :message')
+            ->andWhere('u.slug = :user')
+            ->setParameter('message', $message)
+            ->setParameter('user', $user)
+            ->orderBy('m.id', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
     }
 
 //    /**

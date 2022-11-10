@@ -43,22 +43,29 @@ class AppFixtures extends Fixture
         $threads = [];
 
         for ($i = 0; $i < 5; $i++) {
-            $t = (new Thread())->setSubject($faker->name())
+            $thread = (new Thread())->setSubject($faker->name())
                 ->addParticipant($users[0])
                 ->addParticipant($users[$i+1])
                 ->addMessage((new Message())
                     ->setSender($users[0])
-                    ->setSenderText($users[0]->getFirstname())
-                    ->setContent($faker->text())
+                    ->setSenderText(ucfirst($users[0]->getFirstname()).' '.strtoupper($users[0]->getLastname()))
+                    ->setContent($faker->text(rand(20,100)))
                 )->addMessage((new Message())
+                    ->setSender($users[0])
+                    ->setSenderText(ucfirst($users[0]->getFirstname()).' '.strtoupper($users[0]->getLastname()))
+                    ->setContent($faker->text(rand(20,100)))
+                )
+                ->addMessage((new Message())
                     ->setSender($users[$i+1])
-                    ->setSenderText($users[$i+1]->getFirstname())
-                    ->setContent($faker->text())
-                );
+                    ->setSenderText(ucfirst($users[$i+1]->getFirstname()).' '.strtoupper($users[$i+1]->getLastname()))
+                    ->setContent($faker->text(rand(20,100)))
+                )
+            ;
 
-            $manager->persist($t);
-            $threads[] = $t;
+            $manager->persist($thread);
+            $threads[] = $thread;
         }
+
         $manager->flush();
     }
 }

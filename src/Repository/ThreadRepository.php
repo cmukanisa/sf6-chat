@@ -39,6 +39,19 @@ class ThreadRepository extends ServiceEntityRepository
         }
     }
 
+    public function findParticipant($participant,$thread){
+
+        return $this->createQueryBuilder('t')
+            ->join('t.participants','p')
+            ->andWhere('p.slug = :participant')
+            ->andWhere('t.slug = :thread')
+            ->setParameter('participant', $participant)
+            ->setParameter('thread', $thread)
+            ->getQuery()
+            ->getOneOrNullResult()
+       ;
+    }
+
 //    /**
 //     * @return Thread[] Returns an array of Thread objects
 //     */

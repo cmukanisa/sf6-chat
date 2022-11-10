@@ -12,8 +12,8 @@
 
                 <ul class="list-group list-group-flush">
                     {% for thread in threads %}
-                        <li class="list-group-item {% if app.request.get('thread') == thread.slug %}bg-primary bg-opacity-10 rounded{% endif %}">
-                            <a class="d-flex flex-column d-block text-decoration-none text-dark" href="{{path('home',{thread:thread.slug})}}">
+                        <li class="list-group-item {% if app.request.get('thread') == thread.slug %}bg-primary bg-opacity-10 rounded border border-primary{% endif %}">
+                            <a class="d-flex flex-column d-block text-decoration-none text-dark" href="{{path('home',{thread:thread.slug,subject:thread.subject})}}">
                                 <span class="d-flex w-100 align-items-center justify-content-between">
                                     <span class="h5 mb-0 {% if app.request.get('thread') == thread.slug %}text-primary{% endif %}">{{thread.subject}}</span>
                                     <span>
@@ -28,35 +28,47 @@
                                     <span>
                                         {{thread.messages.last.senderText}} : {{thread.messages.last.content|truncate}}
                                     </span>
-                                    <span class="h5 mb-0 text-secondary">{{thread.messages|length}}</span>
+                                    <span class="h5 mb-0 text-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                            <circle cx="8" cy="8" r="8"/>
+                                        </svg>
+                                        {# {{thread.messages|length}} #}
+                                    </span>
                                 </span>
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
-            {% if thread is not null and thread is defined %}
-                <div class="col-md-8">
-                    <ul class="list-group list-group-flush">
-                        {% for message in thread.messages %}
-                            <li class="list-group-item d-flex flex-column">
-                                <span class="h5 fw-normal">{{message.content}}</span>
-                                <span class="text-secondary">{{message.sender.fullname}} - {{message.createdAt|date()}}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <form class="d-flex mt-5" role="search">
-                        <textarea class="form-control me-2" type="search" placeholder="Search for people and groups" aria-label="Search"></textarea>
-                        <input class="form-control " type="hidden" name="thread" aria-label="Search" value="{{app.request.get('thread')}}">
-                        <button class="btn btn-primary" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-                
-            {% endif %}
+                <div class="col-md-8 h-full max-h-full w-full overflow-y-scroll custom-scrollbar custom-scrollbar-black px-10`">
+                    {% if thread   %}
+                        <ul class="list-group list-group-flush ">
+                            {% for message in thread.messages %}
+                                <li class="list-group-item d-flex flex-column">
+                                    <span class="{% if app.user.id == message.sender.id %} text-primary{% else %}text-danger{% endif %}">{{message.senderText}} </span>
+                                    <span class="fw-normal  h5 mb-0 mt-2">{{message.content}}</span>
+                                    <span class="text-muted small">{{message.createdAt|date()}}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {{ include('message/_form.html.twig') }}
+                    {% elseif thread is null and app.request.get('subject') %}
+                    <div class="modal modal-alert position-static d-block bg-secondary bg-opacity-25 py-5 rounded" tabindex="-1" role="dialog" id="modalChoice">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content rounded-3 shadow">
+                            <div class="modal-body p-4 text-center">
+                                <h5 class="mb-0">{{app.request.get('subject')}}</h5>
+                                <p class="mb-0">{{app.user.fullname}}, Vous ne faites pas partie de cette discussion</p>
+                            </div>
+                            <div class="modal-footer flex-nowrap p-0">
+                                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"><strong>Demander d'adhesion</strong></button>
+                                <a type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" href="{{path('home')}}">Quitter</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
