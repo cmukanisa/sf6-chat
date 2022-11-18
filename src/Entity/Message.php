@@ -21,11 +21,12 @@ use ApiPlatform\Metadata\GraphQl\QueryCollection;
     graphQlOperations: [
         new Mutation(
             name: 'create',
-            // resolver: MessageMutationResolver::class
         ),
         new Mutation(name: 'update'),
-        new Query(security: "is_granted('MESSAGE_READ',object)"),
-        new QueryCollection(security: "is_granted('ROLE_USER')"),
+        new Query(),
+        // new Query(security: "is_granted('MESSAGE_READ',object)"),
+        new QueryCollection(),
+        // new QueryCollection(security: "is_granted('ROLE_USER')"),
     ]
 )]
 class Message

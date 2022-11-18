@@ -9,6 +9,7 @@ use App\Repository\ThreadRepository;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\GraphQl\Query;
+use App\Resolver\MessageMutationResolver;
 use ApiPlatform\Metadata\GraphQl\Mutation;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,15 +20,20 @@ use ApiPlatform\Metadata\GraphQl\QueryCollection;
     graphQlOperations: [
         new Mutation(
             name: 'create',
-            security: "is_granted('ROLE_USER')"
+            // security: "is_granted('ROLE_USER')",
+            // resolver: MessageMutationResolver::class
         ),
         new Mutation(name: 'update'),
-        new Query(security: "is_granted('THREAD_READ',object)"),
-        new QueryCollection(security: "is_granted('ROLE_ADMIN')"),
+        // new Query(security: "is_granted('THREAD_READ',object)"),
+        new Query(),
+        new QueryCollection(),
+        // new QueryCollection(security: "is_granted('ROLE_ADMIN')"),
     ],
     operations: [
-        new GetCollection(security: "is_granted('ROLE_USER')"),
-        new Get(security: "is_granted('THREAD_READ',object)"),
+        new GetCollection(),
+        // new GetCollection(security: "is_granted('ROLE_USER')"),
+        new Get(),
+        // new Get(security: "is_granted('THREAD_READ',object)"),
     ],
 )]
 #[ORM\HasLifecycleCallbacks()]

@@ -21,8 +21,10 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ApiResource(
     graphQlOperations: [
-        new Query(security: 'is_granted("ROLE_USER")'),
-        new QueryCollection(security: 'is_granted("ROLE_USER")')
+        new Query(),
+        // new Query(security: 'is_granted("ROLE_USER")'),
+        new QueryCollection()
+        // new QueryCollection(security: 'is_granted("ROLE_USER")')
     ])
 ]
 class User implements UserInterface, PasswordAuthenticatedUserInterface

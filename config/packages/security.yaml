@@ -14,47 +14,26 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        api:
+        login:
+            pattern: ^/api/login$
             stateless: true
-            pattern: /api
             json_login:
-                # api_login is a route we will create below
-                check_path: api_login
-            custom_authenticators:
-                - App\Security\ApiKeyAuthenticator
-
+                check_path: /api/login
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        api:
+            pattern:   ^/api
+            stateless: true
+            jwt: ~
+            
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticators: 
-                - App\Security\AppAuthenticator
-                - App\Security\ApiKeyAuthenticator
-            login_throttling:
-                max_attempts: 3
-
+            custom_authenticator: App\Security\AppAuthenticator
             logout:
                 path: app_logout
-                
-        # login:
-        #     pattern: ^/api/login$
-        #     stateless: true
-        #     json_login:
-        #         check_path: /api/login
-        #         success_handler: lexik_jwt_authentication.handler.authentication_success
-        #         failure_handler: lexik_jwt_authentication.handler.authentication_failure
-        # api:
-        #     pattern:   ^/api
-        #     stateless: true
-        #     jwt: ~
-            
-        # main:
-        #     lazy: true
-        #     provider: app_user_provider
-        #     custom_authenticator: App\Security\AppAuthenticator
-        #     logout:
-        #         path: app_logout
-        #         # where to redirect after logout
-        #         # target: app_any_route
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -74,11 +53,13 @@ security:
     # ALL ROUTE IS_AUTHENTICATED_FULLY
     # (c) Christian KASSE
     access_control:
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/login, roles: PUBLIC_ACCESS }
 
         - { path: ^/api, roles: PUBLIC_ACCESS }
         - { path: ^/api/login$, roles: PUBLIC_ACCESS }
         - { path: ^/api/signup$, roles: PUBLIC_ACCESS }
+        
 
         - { path: ^/*, roles: IS_AUTHENTICATED_FULLY }
 
