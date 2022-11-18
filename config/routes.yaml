@@ -12,6 +12,16 @@ graphiql:
     controller: api_platform.graphql.action.graphiql
     
 
-api_login_check:
+# api_login_check:
+#     path: /api/login
+#     methods: ['POST']
+
+api_login:
     path: /api/login
     methods: ['POST']
+
+
+
+app_logout:
+    path: /logout
+    methods: GET
