@@ -106,3 +106,45 @@ curl -X 'POST' \
 ````
 
 Utiliser le __JWT__ dans l'en-tete __BEARER__ ou dans le parametre d'url pour s'authentifier sur l'API.
+
+# REQUEST GRAPHQL
+### EXEMPLE DE LA CREATION DU THREAD SANS MESSAGE
+````
+http://localhost:8000/api/graphql
+````
+
+````
+mutation{
+  createThread(input:{
+      subject:"Goupe d'etude",
+      participants:[],
+      messages:[],
+    }){
+    clientMutationId
+    thread{
+      _id
+      id
+      subject
+    }
+  }
+}    
+````
+- Response 
+  
+````
+{
+  "data": {
+    "createThread": {
+      "clientMutationId": null,
+      "thread": {
+        "_id": 8,
+        "id": "/api/threads/8",
+        "subject": "Goupe d'etude"
+      }
+    }
+  }
+}   
+````
+
+- Serait-ce possible de fournir une mutation qui permet en une fois, d'envoyer un thread contenant un message ?
+- OUI (PARCEQUE LES MESSAGES DANS LE THREAD SONT EN (cascade:["perist"]))
